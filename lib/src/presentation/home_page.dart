@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
       final finalPath = await FlutterFileDialog.saveFile(params: params);
       print("finalPath: $finalPath");
 
-      LocalDatabase.insertContact(FactModelSql(
+      LocalDatabase.insertFact(FactModelSql(
           date: date.toString(), name: name, imagePath: file.path));
 
       if (finalPath != null) {

@@ -47,7 +47,7 @@ class LocalDatabase {
     debugPrint("-------DB----------CREATED---------");
   }
 
-  static Future<FactModelSql> insertContact(
+  static Future<FactModelSql> insertFact(
       FactModelSql contactsModelSql) async {
     final db = await getInstance.database;
     final int id = await db.insert(
@@ -55,7 +55,7 @@ class LocalDatabase {
     return contactsModelSql.copyWith(id: id);
   }
 
-  static Future<List<FactModelSql>> getAllContacts() async {
+  static Future<List<FactModelSql>> getAllFact() async {
     List<FactModelSql> allToDos = [];
     final db = await getInstance.database;
     allToDos = (await db.query(FactModelFields.catFactTable))
@@ -65,7 +65,7 @@ class LocalDatabase {
     return allToDos;
   }
 
-  static updateContactName({required int id, required String name}) async {
+  static updateFactName({required int id, required String name}) async {
     final db = await getInstance.database;
     db.update(
       FactModelFields.catFactTable,
@@ -75,7 +75,7 @@ class LocalDatabase {
     );
   }
 
-  static updateContact({required FactModelSql contactsModelSql}) async {
+  static updateFact({required FactModelSql contactsModelSql}) async {
     final db = await getInstance.database;
     db.update(
       FactModelFields.catFactTable,
@@ -85,7 +85,7 @@ class LocalDatabase {
     );
   }
 
-  static Future<int> deleteContact(int id) async {
+  static Future<int> deleteFact(int id) async {
     final db = await getInstance.database;
     int count = await db.delete(
       FactModelFields.catFactTable,
@@ -93,56 +93,5 @@ class LocalDatabase {
       whereArgs: [id],
     );
     return count;
-  }
-
-  static Future<List<FactModelSql>> getContactsByLimit(int limit) async {
-    List<FactModelSql> allToDos = [];
-    final db = await getInstance.database;
-    allToDos = (await db.query(FactModelFields.catFactTable,
-            limit: limit, orderBy: "${FactModelFields.name} ASC"))
-        .map((e) => FactModelSql.fromJson(e))
-        .toList();
-
-    return allToDos;
-  }
-
-  static Future<FactModelSql?> getSingleContact(int id) async {
-    List<FactModelSql> contacts = [];
-    final db = await getInstance.database;
-    contacts = (await db.query(
-      FactModelFields.catFactTable,
-      where: "${FactModelFields.id} = ?",
-      whereArgs: [id],
-    ))
-        .map((e) => FactModelSql.fromJson(e))
-        .toList();
-
-    if (contacts.isNotEmpty) {
-      return contacts.first;
-    }
-  }
-
-  static Future<List<FactModelSql>> getContactsByAlphabet(
-      String order) async {
-    List<FactModelSql> allToDos = [];
-    final db = await getInstance.database;
-    allToDos = (await db.query(FactModelFields.catFactTable,
-            orderBy: "${FactModelFields.name} $order"))
-        .map((e) => FactModelSql.fromJson(e))
-        .toList();
-    return allToDos;
-  }
-
-  static Future<List<FactModelSql>> getContactsByQuery(String query) async {
-    List<FactModelSql> allToDos = [];
-    final db = await getInstance.database;
-    allToDos = (await db.query(
-      FactModelFields.catFactTable,
-      where: "${FactModelFields.name} LIKE ?",
-      whereArgs: [query],
-    ))
-        .map((e) => FactModelSql.fromJson(e))
-        .toList();
-    return allToDos;
   }
 }

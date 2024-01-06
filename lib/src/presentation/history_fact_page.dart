@@ -14,7 +14,7 @@ class _HistoryFactState extends State<HistoryFact> {
   List<FactModelSql> list = [];
 
   fetchData() async {
-    list = await LocalDatabase.getAllContacts();
+    list = await LocalDatabase.getAllFact();
     print(list.length);
   }
 
