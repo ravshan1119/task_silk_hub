@@ -15,10 +15,12 @@ class _HistoryFactState extends State<HistoryFact> {
 
   fetchData() async {
     list = await LocalDatabase.getAllContacts();
+    print(list.length);
   }
 
   @override
   void initState() {
+    fetchData();
     super.initState();
   }
 
@@ -31,16 +33,26 @@ class _HistoryFactState extends State<HistoryFact> {
         scrolledUnderElevation: 0,
         centerTitle: true,
       ),
-      body: Column(
+      body: ListView(
         children: [
           ...List.generate(
               list.length,
-              (index) => ListTile(
-                  title: Text(list[index].name),
-                  leading: Image.asset(list[index].imagePath),
-                  subtitle: Text(
-                    list[index].date,
-                  )))
+              (index) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                    border: Border(top: BorderSide(color: Colors.grey), bottom: BorderSide(color: Colors.grey)),
+                  ),
+                  child: ListTile(
+                      title: Text(list[index].name,style: const TextStyle(color: Colors.black),),
+                      subtitle: Text(
+                        list[index].date,
+                        style: const TextStyle(color: Colors.black),
+                      )),
+                ),
+              ))
         ],
       ),
     );
