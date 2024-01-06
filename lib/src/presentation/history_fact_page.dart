@@ -1,7 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:task_silk_hub/src/data/datasources/local/model/local_database.dart';
 
-class HistoryFact extends StatelessWidget {
+import '../data/datasources/local/model/fact_model.dart';
+
+class HistoryFact extends StatefulWidget {
   const HistoryFact({super.key});
+
+  @override
+  State<HistoryFact> createState() => _HistoryFactState();
+}
+
+class _HistoryFactState extends State<HistoryFact> {
+  List<FactModelSql> list = [];
+
+  fetchData() async {
+    list = await LocalDatabase.getAllContacts();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +32,16 @@ class HistoryFact extends StatelessWidget {
         centerTitle: true,
       ),
       body: Column(
-        children: [],
+        children: [
+          ...List.generate(
+              list.length,
+              (index) => ListTile(
+                  title: Text(list[index].name),
+                  leading: Image.asset(list[index].imagePath),
+                  subtitle: Text(
+                    list[index].date,
+                  )))
+        ],
       ),
     );
   }

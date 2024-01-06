@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'contact_model.dart';
+import 'fact_model.dart';
 
 class LocalDatabase {
   static final LocalDatabase getInstance = LocalDatabase._init();
