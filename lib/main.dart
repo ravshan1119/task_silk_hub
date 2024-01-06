@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:task_silk_hub/src/config/router/app_routes.dart';
+import 'package:task_silk_hub/src/data/datasources/local/model/local_database.dart';
 import 'package:task_silk_hub/src/data/datasources/remote/api_service.dart';
 import 'package:task_silk_hub/src/data/datasources/remote/app_repository.dart';
 import 'package:task_silk_hub/src/presentation/cubit/cat_fact/cat_fact_cubit.dart';
 import 'package:task_silk_hub/src/presentation/home_page.dart';
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const App());
 }
 
